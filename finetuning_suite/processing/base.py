@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 class Preprocessor(ABC):
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
+        self.tokenizer.pad_token = self.tokenizer.eos_token
 
     @abstractmethod
     def preprocess_function(self, sample, padding="max_length"):
