@@ -51,7 +51,7 @@ class FineTuner:
 
         self.dataset = load_dataset(dataset_name)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_id)
-        self.preprocessor = preprocessor if preprocessor else DefaultPreprocessor(self.model_id)
+        self.preprocessor = preprocessor if preprocessor else DefaultPreprocessor(self.tokenizer)
 
         bnb_config = None
         if quantize:
