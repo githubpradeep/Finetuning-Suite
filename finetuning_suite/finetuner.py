@@ -39,7 +39,7 @@ class FineTuner:
         self.dataset_name = dataset_name
 
         self.preprocessor = preprocessor if preprocessor else DefaultPreprocessor(self.model_id)
-        self.trainer_config = trainer_config if trainer_config else DefaultTrainerConfig
+        self.trainer_config = trainer_config if trainer_config else DefaultTrainerConfig()
         self.inference_handler = inference_handler if inference_handler else DefaultInferenceHandler()
 
         self.lora_r = lora_r
@@ -66,7 +66,8 @@ class FineTuner:
         try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_id)
             self.model = AutoModelForCausalLM.from_pretrained(self.model_id, quantization_config=bnb_config)
-            self.model.to(self.device)
+            if not quantize:
+                self.model.to(self.device)
         except Exception as e:
             self.logger.error(f"Failed to load the model or the tokenizer: {e}")
             raise
