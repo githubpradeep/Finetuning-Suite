@@ -15,7 +15,7 @@ class DefaultPreprocessor(Preprocessor):
 
     def preprocess_function(self, sample, padding="max_length", max_source_length=None, max_target_length=None):
         inputs = ["summarize" + item for item in sample["dialogue"]]
-        model_inputs = self.tokenizer(inputs, max_length=max_source_length, padding=padding, truncation=True)
-        labels = self.tokenizer(text_target=sample["summary"], max_length=max_target_length, padding=padding, truncation=True)
+        model_inputs = self.tokenizer(inputs, max_length=max_source_length, truncation=True)
+        labels = self.tokenizer(text_target=sample["summary"], max_length=max_target_length, truncation=True)
         model_inputs["labels"] = labels["input_ids"]
         return model_inputs
