@@ -24,7 +24,7 @@ class DefaultTrainerConfig(TrainerConfiguration):
         lora_config = LoraConfig(
             r=16,
             lora_alpha=32,
-            target_modules=["q", "v"],
+            target_modules=["q_proj", "v_proj"],
             bias="none",
             task_type=TaskType.SEQ_2_SEQ_LM,
         )
