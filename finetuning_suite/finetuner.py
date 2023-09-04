@@ -38,7 +38,7 @@ class FineTuner:
         self.max_length = max_length
         self.dataset_name = dataset_name
 
-        self.preprocessor = preprocessor if preprocessor else DefaultPreprocessor(self.model_id)
+        
         self.trainer_config = trainer_config if trainer_config else DefaultTrainerConfig()
         self.inference_handler = inference_handler if inference_handler else DefaultInferenceHandler()
 
@@ -51,6 +51,7 @@ class FineTuner:
 
         self.dataset = load_dataset(dataset_name)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_id)
+        self.preprocessor = preprocessor if preprocessor else DefaultPreprocessor(self.model_id)
 
         bnb_config = None
         if quantize:
