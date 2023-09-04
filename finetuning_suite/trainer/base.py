@@ -30,7 +30,7 @@ class DefaultTrainerConfig(TrainerConfiguration):
         )
         model = get_peft_model(model, lora_config)
         
-        data_collator = DataCollatorForSeq2Seq(tokenizer, model=model,  label_pad_token_id=-100, pad_to_multiple_of=8 )
+        data_collator = DataCollatorForSeq2Seq(tokenizer, model=model )
 
         training_args = Seq2SeqTrainingArguments(
             output_dir=output_dir,
