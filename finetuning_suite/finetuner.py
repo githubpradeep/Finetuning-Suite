@@ -8,6 +8,7 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     Seq2SeqTrainer,
+    DataCollatorForLanguageModeling,
     Trainer
 )
 
@@ -92,7 +93,7 @@ class FineTuner:
     def train(self, output_dir, num_train_epochs):
         self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model, data_collator, training_args = self.trainer_config.configure(self.model, self.tokenizer, output_dir, num_train_epochs)
-        
+        data_collator = DataCollatorForLanguageModeling(self.tokenizer, mlm=False),
         tokenized_dataset = self.preprocess_data()
 
         trainer = Trainer(model=self.model, args=training_args, data_collator=data_collator, train_dataset=tokenized_dataset["train"])
