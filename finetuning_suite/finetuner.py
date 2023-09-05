@@ -8,6 +8,7 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     Seq2SeqTrainer,
+    Trainer
 )
 
 from finetuning_suite.processing.base import DefaultPreprocessor
@@ -94,7 +95,7 @@ class FineTuner:
         
         tokenized_dataset = self.preprocess_data()
 
-        trainer = Seq2SeqTrainer(model=self.model, args=training_args, data_collator=data_collator, train_dataset=tokenized_dataset["train"])
+        trainer = Trainer(model=self.model, args=training_args, data_collator=data_collator, train_dataset=tokenized_dataset["train"])
         trainer.train()
 
     def generate(self, prompt_text: str, max_length: int = None):
