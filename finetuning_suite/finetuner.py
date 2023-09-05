@@ -89,9 +89,11 @@ class FineTuner:
         return tokenized_dataset
     
     def train(self, output_dir, num_train_epochs):
+        self.tokenizer.pad_token = self.tokenizer.eos_token
         self.model, data_collator, training_args = self.trainer_config.configure(self.model, self.tokenizer, output_dir, num_train_epochs)
         
         tokenized_dataset = self.preprocess_data()
+
         trainer = Seq2SeqTrainer(model=self.model, args=training_args, data_collator=data_collator, train_dataset=tokenized_dataset["train"])
         trainer.train()
 
