@@ -3,6 +3,8 @@ from peft import LoraConfig, TaskType, get_peft_model
 from transformers import (
     DataCollatorForSeq2Seq,
     Seq2SeqTrainingArguments,
+    DataCollatorForLanguageModeling,
+    TrainingArguments
 )
 
 
@@ -30,9 +32,9 @@ class DefaultTrainerConfig(TrainerConfiguration):
         )
         model = get_peft_model(model, lora_config)
         
-        data_collator = DataCollatorForSeq2Seq(tokenizer, model=model )
+        data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
-        training_args = Seq2SeqTrainingArguments(
+        training_args = TrainingArguments(
             output_dir=output_dir,
             auto_find_batch_size=True,
             learning_rate=1e-3,
